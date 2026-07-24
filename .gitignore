@@ -1,0 +1,6 @@
+*.log
+*.lock
+install-result.txt
+.DS_Store
+Thumbs.db
+dist/

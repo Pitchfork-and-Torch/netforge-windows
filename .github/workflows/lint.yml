@@ -1,0 +1,31 @@
+name: PSScriptAnalyzer
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install PSScriptAnalyzer
+        shell: pwsh
+        run: Install-Module PSScriptAnalyzer -Force -Scope CurrentUser
+
+      - name: Analyze scripts
+        shell: pwsh
+        run: |
+          $settings = Join-Path $env:GITHUB_WORKSPACE 'PSScriptAnalyzerSettings.psd1'
+          $results = @()
+          foreach ($target in @('src', 'install.ps1')) {
+            $results += Invoke-ScriptAnalyzer -Path $target -Recurse -Severity Error -Settings $settings
+          }
+          if ($results) {
+            $results | Format-Table -AutoSize
+            exit 1
+          }
+          Write-Host 'PSScriptAnalyzer: no warnings or errors.'
