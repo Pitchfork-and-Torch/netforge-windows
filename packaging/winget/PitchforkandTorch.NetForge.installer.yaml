@@ -1,0 +1,17 @@
+# Example winget manifest fragment for NetForge Windows.
+# Publish via winget-pkgs after tagging a GitHub release with a portable zip.
+# PackageIdentifier: PitchforkandTorch.NetForge
+# PackageVersion: 2.0.0
+PackageIdentifier: PitchforkandTorch.NetForge
+PackageVersion: 2.0.0
+InstallerLocale: en-US
+InstallerType: portable
+Commands:
+  - netforge
+Installers:
+  - Architecture: x64
+    InstallerUrl: https://github.com/Pitchfork-and-Torch/netforge-windows/releases/download/v2.0.0/netforge-windows-2.0.0.zip
+    InstallerSha256: REPLACE_WITH_SHA256_OF_RELEASE_ZIP
+    NestedInstallerType: portable
+ManifestType: installer
+ManifestVersion: 1.6.0
